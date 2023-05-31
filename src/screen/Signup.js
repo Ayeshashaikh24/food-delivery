@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 
 export default function Signup() {
   const [credential, setCredential] = useState({
@@ -8,6 +8,7 @@ export default function Signup() {
     password: "",
     geolocation: "",
   });
+  let navigate=useNavigate();
 
   const handelsubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +31,13 @@ export default function Signup() {
 
     if (!json.success) {
       alert("enter valid credential");
+    }
+    if (json.success) {
+
+      localStorage.setItem("userEmail",credential.email) 
+      localStorage.setItem("authToken",json.authToken)
+      console.log(localStorage.getItem("authToken"))
+      navigate("/")
     }
   };
 
